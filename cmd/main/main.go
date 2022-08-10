@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/imchukwu/karygo_backend/pkg/routes"
@@ -17,7 +18,12 @@ func main() {
 	routes.RegisterTripRoutes(r)
 	http.Handle("/", r)
 
-	fmt.Println("Starting server at port 8000")
-	log.Fatal(http.ListenAndServe("localhost:8000", r))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
+
+	fmt.Println("Starting server")
+	log.Fatal(http.ListenAndServe(":"+port, r))
 
 }
