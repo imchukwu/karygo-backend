@@ -23,7 +23,7 @@ func main() {
 		port = "8000"
 	}
 
-	fmt.Println("Starting server")
+	fmt.Printf("Starting server %v", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 
 }
