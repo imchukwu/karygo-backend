@@ -7,10 +7,10 @@ import (
 
 type Trip struct {
 	gorm.Model
-	Start  string  `json:"start"`
-	End    string  `json:"end"`
-	UserID uint    `json:"userId"`
-	Item   []*Item `json:"item"`
+	Start       string  `json:"start"`
+	End         string  `json:"end"`
+	TravelerId  uint    `json:"travelerId"`
+	Item        []*Item `json:"item"`
 }
 
 func init() {

@@ -7,15 +7,14 @@ import (
 
 type Item struct {
 	gorm.Model
-	Name          string `json:"name"`
-	Image         string `json:"image"`
-	Description   string `json:"description"`
-	ReceiverPhone string `json:"receiver_phone"`
-	SentDate      string `json:"sent_date_time"`
-	ReceivedDate  string `json:"received_date_time"`
-	SuccessCode   string `json:"success_code"`
-	TripID        uint   `json:"tripId"`
-	Trip          *Trip  `json:"trip" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Id              uint   `json:"id"`
+	UserId          uint   `json:"userId"`
+	Name            string `json:"name"`
+	Image           string `json:"image"`
+	TransctionId    uint   `json:"transactionId"`
+	SuccessCode     string `json:"success_code"`
+	TripID          uint   `json:"tripId"`
+	Trip            *Trip  `json:"trip" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 func init() {
