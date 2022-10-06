@@ -7,15 +7,13 @@ import (
 
 type Transaction struct {
 	gorm.Model
-	Id              uint   `json:"id"`
-	UserId          uint   `json:"userId"`
-	Name            string `json:"name"`
-	Image           string `json:"image"`
-	ReceiverPhone   string `json:"receiver_phone"`
-	TransctionType  string `json:"transactionId"`
-	SuccessCode     string `json:"success_code"`
-	TripID          uint   `json:"tripId"`
-	Trip            *Trip  `json:"trip" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	TravelerId      uint     `json:"userId"`
+	NumOfSenders    uint     `json:"num_of_senders"`
+	Senders         *[]User  `json:"senders"`
+	Image           string   `json:"image"`
+	SuccessCode     string   `json:"success_code"`
+	TripID          uint     `json:"tripId"`
+	Trip            *Trip    `json:"trip" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 func init() {

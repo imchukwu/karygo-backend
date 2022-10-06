@@ -19,8 +19,6 @@ type User struct {
 	RegDate    string    `json:"reg_date"`
 	LgaID      uint      `json:"lgaId"`
 	Lga        *Lga      `json:"lga" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Send       []*Send   `json:"send"`
-	Travel     []*Travel `json:"travel"`
 }
 
 func init() {
