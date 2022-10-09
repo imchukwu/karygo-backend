@@ -7,14 +7,19 @@ import (
 
 type Item struct {
 	gorm.Model
-	Id              uint   `json:"id"`
-	UserId          uint   `json:"userId"`
-	Name            string `json:"name"`
-	Image           string `json:"image"`
-	TransctionId    uint   `json:"transactionId"`
-	SuccessCode     string `json:"success_code"`
-	TripID          uint   `json:"tripId"`
-	Trip            *Trip  `json:"trip" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	SenderId                  uint   `json:"senderId"`
+	Name                      string `json:"name"`
+	ItemImageId               uint   `json:"item_imageId"`
+	Start                     string `json:"start"`
+	End                       string `json:"end"`
+	DateRange                 string `json:"date_range"`
+	PreferredMeansOfTransport string `json:"preferred_means_of_transport"`
+	ReceiverName              string `json:"receiver_name"`
+	ReceiverPhone             string `json:"receiver_phone"`
+	ReceiverImageId           uint   `json:"receiver_imageId"`
+	Quantity                  uint   `json:"quantity"`
+	ItemImage                 *Image `json:"item_image" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	ReceiverImage             *Image `json:"receiver_image" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 func init() {
@@ -40,26 +45,8 @@ func GetItem(Id int64) (*Item, *gorm.DB) {
 	return &item, db
 }
 
-func GetItemsByTrip(Id int64) []Item {
-	var items []Item
-	db.Where("ID=?", Id).Find(&items)
-	return items
-}
-
 func DeleteItem(Id int64) *Item {
 	var item *Item
 	db.Where("ID=?", Id).Delete(&item)
 	return item
-}
-
-// func DeleteItemsByUser(Id int64) []*Item {
-// 	var items []*Item
-// 	db.Where("ID=?", Id).Delete(&items)
-// 	return items
-// }
-
-func DeleteItemsByTrip(Id int64) []*Item {
-	var items []*Item
-	db.Where("ID=?", Id).Delete(&items)
-	return items
 }

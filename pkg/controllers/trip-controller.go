@@ -44,6 +44,50 @@ func CreateTrip(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+func GetCompletedTripsByUser(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	userId := vars["userId"]
+	Id, err := strconv.ParseInt(userId, 0, 0)
+	if err != nil {
+		fmt.Println("An error ocurred while parsing value")
+	}
+
+	var tripIds []uint
+	var trips []*models.Trip
+	tripIds = models.GetCompletedTripByUser(Id)
+	for index := range tripIds {
+		trip, _ := models.GetTrip(Id)
+		trips[index] = trip
+	}
+
+	res, _ := json.Marshal(trips)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
+
+func GetPendingTripsByUser(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	userId := vars["userId"]
+	Id, err := strconv.ParseInt(userId, 0, 0)
+	if err != nil {
+		fmt.Println("An error ocurred while parsing value")
+	}
+
+	var tripIds []uint
+	var trips []*models.Trip
+	tripIds = models.GetPendingTripByUser(Id)
+	for index := range tripIds {
+		trip, _ := models.GetTrip(Id)
+		trips[index] = trip
+	}
+
+	res, _ := json.Marshal(trips)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
+
 func DeleteTrip(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	tripId := vars["tripId"]
