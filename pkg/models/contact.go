@@ -7,7 +7,7 @@ import (
 
 type Contact struct {
 	gorm.Model
-	Name    string `json:"firstname"`
+	Name    string `json:"name"`
 	Email   string `json:"email"`
 	Phone   string `json:"phone"`
 	Message string `json:"message"`
