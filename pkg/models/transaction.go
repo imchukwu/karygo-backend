@@ -7,13 +7,12 @@ import (
 
 type Transaction struct {
 	gorm.Model
-	TravelerId      uint     `json:"userId"`
-	NumOfSenders    uint     `json:"num_of_senders"`
-	Senders         *[]User  `json:"senders"`
-	Image           string   `json:"image"`
-	SuccessCode     string   `json:"success_code"`
-	TripID          uint     `json:"tripId"`
-	Trip            *Trip    `json:"trip" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	TravelerId  uint   `json:"travelerId"`
+	SenderId    uint   `json:"senderId"`
+	ItemId      uint   `json:"itemId"`
+	TripId      uint   `json:"tripId"`
+	SuccessCode string `json:"success_code"`
+	Status      string `json:"status"` //Complete, Pending, Failed, Ongoing
 }
 
 func init() {
@@ -39,26 +38,34 @@ func GetTransaction(Id int64) (*Transaction, *gorm.DB) {
 	return &transaction, db
 }
 
-// func GetItemsByTrip(Id int64) []Item {
-// 	var items []Item
-// 	db.Where("ID=?", Id).Find(&items)
-// 	return items
-// }
+func GetItemIdBySender(Id int64) []uint {
+	var itemIds []uint
+	db.Where("SenderId=?", Id).Find(itemIds)
+	return itemIds
+}
 
-// func DeleteItem(Id int64) *Item {
-// 	var item *Item
-// 	db.Where("ID=?", Id).Delete(&item)
-// 	return item
-// }
+func GetItemIdByTraveler(Id int64) []uint {
+	var itemIds []uint
+	db.Where("TravelerId=?", Id).Find(itemIds)
+	return itemIds
 
-// // func DeleteItemsByUser(Id int64) []*Item {
-// // 	var items []*Item
-// // 	db.Where("ID=?", Id).Delete(&items)
-// // 	return items
-// // }
+}
 
-// func DeleteItemsByTrip(Id int64) []*Item {
-// 	var items []*Item
-// 	db.Where("ID=?", Id).Delete(&items)
-// 	return items
-// }
+func GetCompletedTripByUser(Id int64) []uint {
+	var tripIds []uint
+	db.Where("Status = ?", "Complete").Where("SenderId = ?", Id).Or("TravelerId = ?", Id).Find(tripIds)
+	return tripIds
+}
+
+func GetPendingTripByUser(Id int64) []uint {
+	var tripIds []uint
+	db.Where("Status = ?", "Pending").Where("SenderId = ?", Id).Or("TravelerId = ?", Id).Find(tripIds)
+	return tripIds
+
+}
+
+func DeleteTransaction(Id int64) *Transaction {
+	var transaction *Transaction
+	db.Where("ID=?", Id).Delete(&transaction)
+	return transaction
+}

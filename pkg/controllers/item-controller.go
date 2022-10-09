@@ -42,11 +42,14 @@ func GetItemsSentByUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("An error ocurred while parsing value")
 	}
 
+	var itemIds []uint
 	var items []*models.Item
-	sends := models.GetItemsSentByUser(Id)
-	for index, item := range sends {
-		items[index] = item.Item
+	itemIds = models.GetItemIdBySender(Id)
+	for index := range itemIds {
+		itemDetail, _ := models.GetItem(Id)
+		items[index] = itemDetail
 	}
+
 	res, _ := json.Marshal(items)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -61,26 +64,14 @@ func GetItemsTransportedByUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("An error ocurred while parsing value")
 	}
 
+	var itemIds []uint
 	var items []*models.Item
-	travels := models.GetItemsTransportedByUser(Id)
-	for index, item := range travels {
-		items[index] = item.Item
-	}
-	res, _ := json.Marshal(items)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
-}
-
-func GetItemsByTrip(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	tripId := vars["tripId"]
-	Id, err := strconv.ParseInt(tripId, 0, 0)
-	if err != nil {
-		fmt.Println("An error occured while parsing value")
+	itemIds = models.GetItemIdByTraveler(Id)
+	for index := range itemIds {
+		itemDetail, _ := models.GetItem(Id)
+		items[index] = itemDetail
 	}
 
-	items := models.GetItemsByTrip(Id)
 	res, _ := json.Marshal(items)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -111,38 +102,38 @@ func DeleteItem(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-func DeleteItemsByUser(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	userId := vars["userId"]
-	Id, err := strconv.ParseInt(userId, 0, 0)
-	if err != nil {
-		fmt.Println("error while parsing")
-	}
+// func DeleteItemsByUser(w http.ResponseWriter, r *http.Request) {
+// 	vars := mux.Vars(r)
+// 	userId := vars["userId"]
+// 	Id, err := strconv.ParseInt(userId, 0, 0)
+// 	if err != nil {
+// 		fmt.Println("error while parsing")
+// 	}
 
-	var items []*models.Item
-	sends := models.DeleteItemsByUser(Id)
-	for index, item := range sends {
-		items[index] = item.Item
-	}
-	res, _ := json.Marshal(items)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
-}
+// 	var items []*models.Item
+// 	sends := models.DeleteItemsByUser(Id)
+// 	for index, item := range sends {
+// 		items[index] = item.Item
+// 	}
+// 	res, _ := json.Marshal(items)
+// 	w.Header().Set("Content-Type", "application/json")
+// 	w.WriteHeader(http.StatusOK)
+// 	w.Write(res)
+// }
 
-func DeleteItemsByTrip(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	itemId := vars["itemId"]
-	Id, err := strconv.ParseInt(itemId, 0, 0)
-	if err != nil {
-		fmt.Println("error while parsing")
-	}
-	item := models.DeleteItemsByTrip(Id)
-	res, _ := json.Marshal(item)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
-}
+// func DeleteItemsByTrip(w http.ResponseWriter, r *http.Request) {
+// 	vars := mux.Vars(r)
+// 	itemId := vars["itemId"]
+// 	Id, err := strconv.ParseInt(itemId, 0, 0)
+// 	if err != nil {
+// 		fmt.Println("error while parsing")
+// 	}
+// 	item := models.DeleteItemsByTrip(Id)
+// 	res, _ := json.Marshal(item)
+// 	w.Header().Set("Content-Type", "application/json")
+// 	w.WriteHeader(http.StatusOK)
+// 	w.Write(res)
+// }
 
 func UpdateItem(w http.ResponseWriter, r *http.Request) {
 	var updateItem = &models.Item{}
