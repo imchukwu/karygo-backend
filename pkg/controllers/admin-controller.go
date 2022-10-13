@@ -97,3 +97,26 @@ func GetAdmin(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
+
+func GetTransactions(w http.ResponseWriter, r *http.Request) {
+	transactions := models.GetTransactions()
+	res, _ := json.Marshal(transactions)
+	w.Header().Set("Content_Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
+
+func GetTransaction(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	txId := vars["txId"]
+	Id, err := strconv.ParseInt(txId, 0, 0)
+	if err != nil {
+		fmt.Println("error while passing")
+	}
+
+	txDetail, _ := models.GetTransaction(Id)
+	res, _ := json.Marshal(txDetail)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
