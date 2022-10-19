@@ -17,6 +17,7 @@ func main() {
 	routes.RegisterItemRoutes(r)
 	routes.RegisterTripRoutes(r)
 	routes.RegisterContactRoutes(r)
+	routes.RegisterAdminRoutes(r)
 	http.Handle("/", r)
 
 	port := os.Getenv("PORT")
