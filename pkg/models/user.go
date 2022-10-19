@@ -9,16 +9,16 @@ var db *gorm.DB
 
 type User struct {
 	gorm.Model
-	Firstname  string    `json:"firstname"`
-	Middlename string    `json:"middlename"`
-	Lastname   string    `json:"lastname"`
-	Email      string    `json:"email"`
-	Password   string    `json:"password"`
-	Address    string    `json:"address"`
-	Gender     string    `json:"gender"`
-	RegDate    string    `json:"reg_date"`
-	LgaID      uint      `json:"lgaId"`
-	Lga        *Lga      `json:"lga" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Firstname  string `json:"firstname"`
+	Middlename string `json:"middlename"`
+	Lastname   string `json:"lastname"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	Address    string `json:"address"`
+	Gender     string `json:"gender"`
+	RegDate    string `json:"reg_date"`
+	LgaId      uint   `json:"lgaId"`
+	Lga        *Lga   `json:"lga" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 func init() {
