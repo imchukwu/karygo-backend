@@ -12,6 +12,8 @@ import (
 )
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	users := models.GetUsers()
 	res, _ := json.Marshal(users)
 	w.Header().Set("Content-Type", "application/json")
@@ -20,6 +22,8 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	userId := vars["userId"]
 	Id, err := strconv.ParseInt(userId, 0, 0)
@@ -34,6 +38,8 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	CreateUser := &models.User{}
 	utils.ParseBody(r, CreateUser)
 	u := CreateUser.CreateUser()
@@ -44,6 +50,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	userId := vars["userId"]
 	Id, err := strconv.ParseInt(userId, 0, 0)
@@ -58,6 +66,8 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	var updateUser = &models.User{}
 	utils.ParseBody(r, updateUser)
 

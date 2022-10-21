@@ -26,7 +26,29 @@ import (
 	"github.com/imchukwu/karygo_backend/pkg/utils"
 )
 
+// Enable access from localhost:3000
+func enableCors(w *http.ResponseWriter) {
+(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+}
+// swagger:route GET /admin admins listAdmins
+// 	Returns a list of admins
+// 	Responses:
+//  	200: adminsResponse
+
+
+// list of admins to be returned in response
+// swagger:response adminsResponse
+type adminsResponse struct{
+	// All admins in the system
+	// in: body
+	Body []models.Admin
+
+}
+
+// Get all Admins
 func GetAdmins (w http.ResponseWriter, r *http.Request){
+	enableCors(&w)
+
 	admins := models.GetAdmins()
 	res, _ := json.Marshal(admins)
 	w.Header().Set("Content-Type", "application/json")
@@ -34,7 +56,10 @@ func GetAdmins (w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
+// Create a new Admin
 func CreateAdmin (w http.ResponseWriter, r *http.Request){
+	enableCors(&w)
+
 	newAdmin := &models.Admin{}
 	utils.ParseBody(r, newAdmin)
 	admin := newAdmin.CreateAdmin()
@@ -44,7 +69,10 @@ func CreateAdmin (w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
+// Update an existing Admin by parameter:ID
 func UpdateAdmin (w http.ResponseWriter, r *http.Request){
+	enableCors(&w)
+
 	updateAdmin := &models.Admin{}
 	utils.ParseBody(r, updateAdmin)
 
@@ -85,7 +113,10 @@ func UpdateAdmin (w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
+// Delete Admin by parameter:ID
 func DeleteAdmin(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	adminId := vars["adminId"]
 	Id, err := strconv.ParseInt(adminId, 0, 0)
@@ -98,8 +129,25 @@ func DeleteAdmin(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
+// swagger:route GET /admin/{adminId} admin admin
+// 	Returns an admin by ID
+// 	Parameters:
+// 		name: // 	responses:
+//  	200: adminResponse
 
+// list of admins to be returned in response
+// swagger:response adminResponse
+type adminResponse struct{
+	// All admins in the system
+	// in: body
+	Body models.Admin
+
+}
+
+// Get admin by parameter:ID
 func GetAdmin(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	adminId := vars["adminId"]
 	Id, err := strconv.ParseInt(adminId, 0, 0)
@@ -113,7 +161,24 @@ func GetAdmin(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+// swagger:route GET /admin/{adminId} admin admin
+// Returns a list of admins
+// Responses:
+//  200: adminResponse
+
+// list of admins to be returned in response
+// swagger:response adminResponse
+type transactionsResponse struct{
+	// All admins in the system
+	// in: body
+	Body models.Admin
+
+}
+
+// Get all Transactions
 func GetTransactions(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	transactions := models.GetTransactions()
 	res, _ := json.Marshal(transactions)
 	w.Header().Set("Content_Type", "application/json")
@@ -121,13 +186,17 @@ func GetTransactions(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+// Get transaction by parameter:ID
 func GetTransaction(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	txId := vars["txId"]
 	Id, err := strconv.ParseInt(txId, 0, 0)
 	if err != nil {
 		fmt.Println("error while passing")
 	}
+
 
 	txDetail, _ := models.GetTransaction(Id)
 	res, _ := json.Marshal(txDetail)

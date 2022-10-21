@@ -12,6 +12,8 @@ import (
 )
 
 func GetItems(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	items := models.GetItems()
 	res, _ := json.Marshal(items)
 	w.Header().Set("Content-Type", "application/json")
@@ -20,6 +22,8 @@ func GetItems(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetItem(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	itemId := vars["itemId"]
 	Id, err := strconv.ParseInt(itemId, 0, 0)
@@ -35,6 +39,8 @@ func GetItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetItemsSentByUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	userId := vars["userId"]
 	Id, err := strconv.ParseInt(userId, 0, 0)
@@ -57,6 +63,8 @@ func GetItemsSentByUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetItemsTransportedByUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	userId := vars["userId"]
 	Id, err := strconv.ParseInt(userId, 0, 0)
@@ -79,6 +87,8 @@ func GetItemsTransportedByUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateItem(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	CreateItem := &models.Item{}
 	utils.ParseBody(r, CreateItem)
 	u := CreateItem.CreateItem()
@@ -89,6 +99,8 @@ func CreateItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteItem(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	itemId := vars["itemId"]
 	Id, err := strconv.ParseInt(itemId, 0, 0)
@@ -136,6 +148,8 @@ func DeleteItem(w http.ResponseWriter, r *http.Request) {
 // }
 
 func UpdateItem(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	var updateItem = &models.Item{}
 	utils.ParseBody(r, updateItem)
 

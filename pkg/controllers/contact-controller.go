@@ -12,6 +12,8 @@ import (
 )
 
 func GetContacts(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	contacts := models.GetContacts()
 	res, _ := json.Marshal(contacts)
 	w.Header().Set("Content-Type", "application/json")
@@ -20,6 +22,8 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetContact(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	contactId := vars["contactId"]
 	Id, err := strconv.ParseInt(contactId, 0, 0)
@@ -34,6 +38,8 @@ func GetContact(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateContact(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	CreateContact := &models.Contact{}
 	utils.ParseBody(r, CreateContact)
 	contact := CreateContact.CreateContact()
@@ -44,6 +50,8 @@ func CreateContact(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteContact(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	contactId := vars["contactId"]
 	Id, err := strconv.ParseInt(contactId, 0, 0)
@@ -58,6 +66,8 @@ func DeleteContact(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateContact(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	var updateContact = &models.Contact{}
 	utils.ParseBody(r, updateContact)
 

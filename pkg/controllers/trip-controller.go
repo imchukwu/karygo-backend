@@ -12,6 +12,8 @@ import (
 )
 
 func GetTrips(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	trips := models.GetTrips()
 	res, _ := json.Marshal(trips)
 	w.Header().Set("Content-Type", "application/json")
@@ -20,6 +22,8 @@ func GetTrips(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetTrip(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	tripId := vars["tripId"]
 	Id, err := strconv.ParseInt(tripId, 0, 0)
@@ -35,6 +39,8 @@ func GetTrip(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateTrip(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	CreateTrip := &models.Trip{}
 	utils.ParseBody(r, CreateTrip)
 	u := CreateTrip.CreateTrip()
@@ -45,6 +51,8 @@ func CreateTrip(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCompletedTripsByUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	userId := vars["userId"]
 	Id, err := strconv.ParseInt(userId, 0, 0)
@@ -67,6 +75,8 @@ func GetCompletedTripsByUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetPendingTripsByUser(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+
 	vars := mux.Vars(r)
 	userId := vars["userId"]
 	Id, err := strconv.ParseInt(userId, 0, 0)
@@ -89,6 +99,8 @@ func GetPendingTripsByUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteTrip(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	
 	vars := mux.Vars(r)
 	tripId := vars["tripId"]
 	Id, err := strconv.ParseInt(tripId, 0, 0)
