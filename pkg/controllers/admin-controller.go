@@ -28,7 +28,7 @@ import (
 
 // Enable access from localhost:3000
 func enableCors(w *http.ResponseWriter) {
-(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 // swagger:route GET /admin admins listAdmins
 // 	Returns a list of admins
