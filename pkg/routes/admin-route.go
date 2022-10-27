@@ -5,7 +5,7 @@ import (
 	"github.com/imchukwu/karygo_backend/pkg/controllers"
 )
 
-var RegisterAdminRoutes = func (r *mux.Router){
+var RegisterAdminRoutes = func(r *mux.Router) {
 	r.HandleFunc("/admin", controllers.CreateAdmin).Methods("POST")
 	r.HandleFunc("/admin", controllers.GetAdmins).Methods("GET")
 	r.HandleFunc("/admin/{adminId}", controllers.GetAdmin).Methods("GET")
