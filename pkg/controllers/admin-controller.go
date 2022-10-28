@@ -29,6 +29,9 @@ import (
 // Enable access from all origin
 func enableCors(w *http.ResponseWriter) {
 (*w).Header().Set("Access-Control-Allow-Origin", "*")
+(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS") 
+(*w).Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Authorization")
+
 }
 // swagger:route GET /admin admins listAdmins
 // 	Returns a list of admins
