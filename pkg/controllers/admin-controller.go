@@ -26,7 +26,7 @@ import (
 	"github.com/imchukwu/karygo_backend/pkg/utils"
 )
 
-// Enable access from localhost:3000
+// Enable access from all origin
 func enableCors(w *http.ResponseWriter) {
 (*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
@@ -34,7 +34,9 @@ func enableCors(w *http.ResponseWriter) {
 // 	Returns a list of admins
 // 	Responses:
 //  	200: adminsResponse
-
+//  Produces:
+// 		- application/json
+//		- application/xml
 
 // list of admins to be returned in response
 // swagger:response adminsResponse
@@ -56,6 +58,26 @@ func GetAdmins (w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
+// swagger:route POST /admin admin creatAdmin
+// 	Creates new admin
+// 	responses:
+//  	200: createAdminResponse
+// 		
+// 		default: error
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// New admin to be returned in response
+// swagger:response createAdminResponse
+type createAdminResponse struct{
+	// Create new admin in the system
+	// in: body
+	Body models.Admin
+
+}
+
+
 // Create a new Admin
 func CreateAdmin (w http.ResponseWriter, r *http.Request){
 	enableCors(&w)
@@ -67,6 +89,30 @@ func CreateAdmin (w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
+}
+
+// swagger:route PUT /admin/{adminId} admin updateAdmin 
+// 	Returns updated admin
+// 	Parameters:
+// 		name: adminId
+// 		in: path
+// 		description: ID of admin to be updated
+// 		required: true
+// 		type: integer
+// 		format: int64
+// 	responses:
+//  	200: updateAdminResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// updated admin is returned in response
+// swagger:response updateAdminResponse
+type updateAdminResponse struct{
+	// update admin in the system
+	// in: body
+	Body models.Admin
+
 }
 
 // Update an existing Admin by parameter:ID
@@ -113,6 +159,33 @@ func UpdateAdmin (w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
+// swagger:route DELETE /admin/{adminId} admin deleteAdmin
+// 	Returns deleted admin
+// 	Parameters:
+// 		name: adminId
+// 		in: path
+// 		description: ID of admin to be deleted
+// 		required: true
+// 		type: integer
+// 		format: int64
+// 	responses:
+//  	200: deleteAdminResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// deleted admin is returned in response
+// swagger:response deleteAdminResponse
+type deleteAdminResponse struct{
+	// delete admin in the system
+	// in: body
+	Body models.Admin
+
+}
+
+
+
+
 // Delete Admin by parameter:ID
 func DeleteAdmin(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -129,13 +202,22 @@ func DeleteAdmin(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
-// swagger:route GET /admin/{adminId} admin admin
+// swagger:route GET /admin/{adminId} admin getAdmin
 // 	Returns an admin by ID
 // 	Parameters:
-// 		name: // 	responses:
+// 		name: adminId
+// 		in: path
+// 		description: ID of admin to be fetched
+// 		required: true
+// 		type: integer
+// 		format: int64
+// 	responses:
 //  	200: adminResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
 
-// list of admins to be returned in response
+// admin to be returned in response
 // swagger:response adminResponse
 type adminResponse struct{
 	// All admins in the system
@@ -161,17 +243,21 @@ func GetAdmin(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-// swagger:route GET /admin/{adminId} admin admin
-// Returns a list of admins
-// Responses:
-//  200: adminResponse
+// swagger:route GET /admin/transactions transaction getTransactions
+// Returns list of transactions
+// 	Responses:
+//  	200: transactionsResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
 
-// list of admins to be returned in response
-// swagger:response adminResponse
+
+// list of transactions to be returned in response
+// swagger:response transactionsResponse
 type transactionsResponse struct{
-	// All admins in the system
+	// All Transactions in the system
 	// in: body
-	Body models.Admin
+	Body []models.Transaction
 
 }
 
@@ -184,6 +270,32 @@ func GetTransactions(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content_Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
+}
+
+// swagger:route GET /admin/transaction/{txId} transaction getTransaction
+// Returns a transaction by ID
+// 	Parameters:
+// 		in: path
+// 		required: true 
+// 		name: txId
+// 		description: ID of transaction to be fetched
+// 		
+//		type: integer
+// 		format: int64
+// 		
+// 	Responses:
+//  	200: transactionResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// transaction to be returned in response
+// swagger:response transactionResponse
+type transactionResponse struct{
+	// A transaction in the system by ID
+	// in: body
+	Body models.Transaction
+
 }
 
 // Get transaction by parameter:ID

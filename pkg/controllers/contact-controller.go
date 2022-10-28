@@ -11,6 +11,23 @@ import (
 	"github.com/imchukwu/karygo_backend/pkg/utils"
 )
 
+// swagger:route GET /contact contacts listContacts
+// 	Returns a list of contacts
+// 	Responses:
+//  	200: contactsResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// list of contacts to be returned in response
+// swagger:response contactsResponse
+type contactsResponse struct{
+	// All contacts in the system
+	// in: body
+	Body []models.Contact
+
+}
+
 func GetContacts(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
@@ -21,6 +38,31 @@ func GetContacts(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+// swagger:route GET /contact/{contactId} contact getContact
+// 	Returns an contact by ID
+// 	Parameters:
+// 		name: contactId
+// 		in: path
+// 		description: ID of contact to be fetched
+// 		required: true
+// 		type: integer
+// 		format: int64
+// 	responses:
+//  	200: contactResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// contact to be returned in response
+// swagger:response contactResponse
+type contactResponse struct{
+	// All contacts in the system
+	// in: body
+	Body models.Contact
+
+}
+
+// Get a contact by ID
 func GetContact(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
@@ -37,6 +79,27 @@ func GetContact(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+//  swagger:route POST /contact contact creatContact
+// 	Creates new contact
+// 	responses:
+//  	200: createContactResponse
+// 		
+// 		default: error
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// New contact to be returned in response
+// swagger:response createContactResponse
+type createContactResponse struct{
+	// Create new contact in the system
+	// in: body
+	Body models.Contact
+
+}
+
+
+// Creates new contact
 func CreateContact(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
@@ -49,6 +112,32 @@ func CreateContact(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+// swagger:route DELETE /contact/{contactId} contact deleteContact
+// 	Returns deleted contact
+// 	Parameters:
+// 		name: contactId
+// 		in: path
+// 		description: ID of contact to be deleted
+// 		required: true
+// 		type: integer
+// 		format: int64
+// 	responses:
+//  	200: deleteContactResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// deleted contact is returned in response
+// swagger:response deleteContactResponse
+type deleteContactResponse struct{
+	// delete contact in the system
+	// in: body
+	Body models.Contact
+
+}
+
+
+// Delete contact
 func DeleteContact(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
@@ -65,6 +154,33 @@ func DeleteContact(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+
+// swagger:route PUT /contact/{contactId} contact updateContact 
+// 	Returns updated contact
+// 	Parameters:
+// 		name: contactId
+// 		in: path
+// 		description: ID of contact to be updated
+// 		required: true
+// 		type: integer
+// 		format: int64
+// 	responses:
+//  	200: updateContactResponse
+//  Produces:
+// 		- application/json
+//		- application/xml
+
+// updated contact is returned in response
+// swagger:response updateContactResponse
+type updateContactResponse struct{
+	// update contact in the system
+	// in: body
+	Body models.Contact
+
+}
+
+
+// Updates a contact by ID
 func UpdateContact(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
