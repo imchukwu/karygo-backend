@@ -104,7 +104,7 @@ func GetAdmin(w http.ResponseWriter, r *http.Request) {
 	adminId := vars["adminId"]
 	Id, err := strconv.ParseInt(adminId, 0, 0)
 	if err != nil {
-		fmt.Println("error while parsing")
+		fmt.Println("error while parsing me")
 	}
 	adminDetail, _ := models.GetAdmin(Id)
 	res, _ := json.Marshal(adminDetail)
