@@ -43,9 +43,9 @@ type Billing struct {
 		return &billing, db
 	}
 
-	func GetBillingsByUser(Id int64) []uint{
-		var userBillings []uint
-		db.Where("userId = ?", Id).Find(userBillings)
+	func GetBillingsByUser(Id int64) []*Billing{
+		var userBillings []*Billing
+		db.Where("user_id = ?", Id).Find(&userBillings)
 		return userBillings
 	}
 
@@ -63,6 +63,6 @@ type Billing struct {
 
 	func DeleteBilling(Id int64) *Billing{
 		var billing *Billing
-		db.Where("ID = ?", Id).Delete(&billing)
+		db.Where("id = ?", Id).Delete(&billing)
 		return billing
 	}

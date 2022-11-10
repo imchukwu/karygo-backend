@@ -55,7 +55,7 @@ func DeleteBilling(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
 	vars := mux.Vars(r)
-	billingId := vars["userId"]
+	billingId := vars["billingId"]
 	Id, err := strconv.ParseInt(billingId, 0, 0)
 	if err != nil {
 		fmt.Println("error while parsing")
@@ -79,19 +79,9 @@ func GetBillingsByUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("An error ocurred while parsing value")
 	}
 
-	var billingIds []uint
 	var billings []*models.Billing
-		fmt.Print(billings)
-	billingIds = models.GetBillingsByUser(Id)
-		fmt.Print(billingIds)
-	for index := range billingIds{
-		billing, _ := models.GetBilling(Id)
-		billings[index] = billing
-	}
-
-	fmt.Print(billings)
-
-	res, _ := json.Marshal(billingIds)
+	billings = models.GetBillingsByUser(Id)
+	res, _ := json.Marshal(billings)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
