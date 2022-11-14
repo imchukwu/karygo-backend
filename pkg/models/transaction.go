@@ -26,8 +26,8 @@ func (transaction *Transaction) CreateTransaction() *Transaction {
 	return transaction
 }
 
-func GetTransactions() []Transaction {
-	var transactions []Transaction
+func GetTransactions() []*Transaction {
+	var transactions []*Transaction
 	db.Find(&transactions)
 	return transactions
 }
